@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Restaurant {
-  id       String    @id @unique @db.VarChar(20)
+  id       String    @id @default(uuid())
   name     String    @db.VarChar(20)
   email    String    @unique @db.VarChar(254)
   users    User[]
@@ -29,7 +29,7 @@ model User {
   name         String        @db.VarChar(100)
   role         Role
   password     String        @db.VarChar(100)
-  restaurantId String        @db.VarChar(20)
+  restaurantId String
   Restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
   transactions Transaction[]
 
@@ -42,7 +42,7 @@ model Product {
   name         String                   @db.VarChar(50)
   cost         Decimal                  @db.Decimal(10, 2)
   price        Decimal                  @db.Decimal(10, 2)
-  restaurantId String                   @db.VarChar(20)
+  restaurantId String
   Restaurant   Restaurant               @relation(fields: [restaurantId], references: [id])
   transactions TransactionsOnProducts[]
 

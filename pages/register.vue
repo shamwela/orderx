@@ -1,14 +1,23 @@
 <script setup lang="ts">
-const restaurantId = ref('')
-const password = ref('')
 const errorMessage = ref<string | null>(null)
 
-async function register() {
-  const { error } = await useFetch('/api/user', {
+async function registerAccount(event: Event) {
+  const { elements } = event.currentTarget as any
+  function getValue(name: string) {
+    return elements.namedItem(name).value as string
+  }
+  const restaurantName = getValue('restaurantName')
+  const email = getValue('email')
+  const password = getValue('password')
+  console.log({ restaurantName, email, password })
+  return
+
+  const { error } = await useFetch('/api/register', {
     method: 'post',
     body: {
-      restaurantId: 123,
-      password: password.value,
+      restaurantName,
+      email,
+      password,
     },
   })
   if (error) {
@@ -20,20 +29,21 @@ async function register() {
 
 <template>
   <h1>OrderX Register</h1>
-  <form @submit.prevent="register">
-    <label for="restaurantId">Restaurant ID</label>
+  <form @submit.prevent="registerAccount">
+    <label for="restaurantName">Restaurant name</label>
     <input
-      v-model="restaurantId"
-      name="restaurantId"
-      id="restaurantId"
+      name="Restaurant name"
+      id="restaurantName"
       type="text"
       max="20"
       required
     />
 
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email" max="254" required />
+
     <label for="password">Password</label>
     <input
-      v-model="password"
       name="password"
       id="password"
       type="password"
