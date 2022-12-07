@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Restaurant {
+  id       String    @id @unique @db.VarChar(20)
+  name     String    @db.VarChar(20)
+  email    String    @unique @db.VarChar(254)
+  users    User[]
+  products Product[]
+
+  @@index([name])
+}
+
+enum Role {
+  admin
+  cashier
+  cook
+}
+
+model User {
+  id           String        @id @unique @db.VarChar(20)
+  name         String        @db.VarChar(100)
+  role         Role
+  restaurantId String        @db.VarChar(20)
+  Restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
+  transactions Transaction[]
+
+  @@index([name])
+  @@index([restaurantId])
+}
+
+model Product {
+  id           String                   @id @default(uuid())
+  name         String                   @db.VarChar(50)
+  cost         Decimal                  @db.Decimal(10, 2)
+  price        Decimal                  @db.Decimal(10, 2)
+  restaurantId String                   @db.VarChar(20)
+  Restaurant   Restaurant               @relation(fields: [restaurantId], references: [id])
+  transactions TransactionsOnProducts[]
+
+  @@index([name])
+  @@index([restaurantId])
+}
+
+model Transaction {
+  id        String                   @id @default(uuid())
+  cashierId String                   @db.VarChar(20)
+  User      User                     @relation(fields: [cashierId], references: [id])
+  products  TransactionsOnProducts[]
+
+  @@index([cashierId])
+}
+
+model TransactionsOnProducts {
+  transactionId String
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([transactionId, productId])
+  @@index([transactionId])
+  @@index([productId])
+}
