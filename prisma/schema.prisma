@@ -28,6 +28,7 @@ model User {
   id           String        @id @unique @db.VarChar(20)
   name         String        @db.VarChar(100)
   role         Role
+  password     String        @db.VarChar(100)
   restaurantId String        @db.VarChar(20)
   Restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
   transactions Transaction[]
