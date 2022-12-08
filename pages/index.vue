@@ -1,3 +1,3 @@
 <template>
-  <h1 class="bg-red-500">Hello</h1>
+  <NuxtLink to="/register">Register</NuxtLink>
 </template>

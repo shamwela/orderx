@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { TRPCClientError } from '@trpc/client'
+import { inferRouterOutputs, TRPCError } from '@trpc/server'
+import type { AppRouter } from '@/server/trpc/routers'
+
+const pending = ref(false)
 const errorMessage = ref<string | null>(null)
 
 async function registerAccount(event: Event) {
+  pending.value = true
   const { elements } = event.currentTarget as any
   function getValue(name: string) {
     return elements.namedItem(name).value as string
@@ -9,21 +15,29 @@ async function registerAccount(event: Event) {
   const restaurantName = getValue('restaurantName')
   const email = getValue('email')
   const password = getValue('password')
-  console.log({ restaurantName, email, password })
-  return
 
-  const { error } = await useFetch('/api/register', {
-    method: 'post',
-    body: {
+  type RouterOutput = inferRouterOutputs<AppRouter>
+  type RegisterOutput = RouterOutput['register']
+  type ErrorOutput = TRPCClientError<AppRouter>
+  const { $client } = useNuxtApp()
+
+  const { data, error } = await useAsyncData<RegisterOutput, ErrorOutput>(() =>
+    $client.register.mutate({
       restaurantName,
       email,
       password,
-    },
-  })
-  if (error) {
-    errorMessage.value = error.value?.statusMessage || 'Unknown error.'
+    })
+  )
+  if (data || error) {
+    pending.value = false
+  }
+
+  if (error instanceof TRPCError) {
+    errorMessage.value = error.value?.message || 'Unknown error.'
     return
   }
+
+  alert('Register success.')
 }
 </script>
 
@@ -35,24 +49,27 @@ async function registerAccount(event: Event) {
       name="Restaurant name"
       id="restaurantName"
       type="text"
-      max="20"
+      maxlength="20"
       required
     />
 
     <label for="email">Email</label>
-    <input name="email" id="email" type="email" max="254" required />
+    <input name="email" id="email" type="email" maxlength="254" required />
 
     <label for="password">Password</label>
     <input
       name="password"
       id="password"
       type="password"
-      min="8"
-      max="100"
+      minlength="8"
+      maxlength="100"
       required
     />
 
-    <button type="submit">Register</button>
+    <button type="submit">
+      <span v-if="pending">Registering...</span>
+      <span v-else>Register</span>
+    </button>
   </form>
   <span v-if="errorMessage">{{ errorMessage }}</span>
 </template>
