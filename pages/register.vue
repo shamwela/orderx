@@ -54,7 +54,14 @@ async function registerAccount(event: Event) {
     />
 
     <label for="email">Email</label>
-    <input name="email" id="email" type="email" maxlength="254" required />
+    <input
+      name="email"
+      id="email"
+      type="email"
+      minlength="3"
+      maxlength="254"
+      required
+    />
 
     <label for="password">Password</label>
     <input

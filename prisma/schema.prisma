@@ -11,7 +11,6 @@ datasource db {
 model Restaurant {
   id       String    @id @default(uuid())
   name     String    @db.VarChar(20)
-  email    String    @unique @db.VarChar(254)
   users    User[]
   products Product[]
 
@@ -25,8 +24,9 @@ enum Role {
 }
 
 model User {
-  id           String        @id @unique @db.VarChar(20)
+  id           String        @id @default(uuid())
   name         String        @db.VarChar(100)
+  email        String        @unique @db.VarChar(254)
   role         Role
   password     String        @db.VarChar(100)
   restaurantId String
@@ -52,7 +52,7 @@ model Product {
 
 model Transaction {
   id        String                   @id @default(uuid())
-  cashierId String                   @db.VarChar(20)
+  cashierId String
   User      User                     @relation(fields: [cashierId], references: [id])
   products  TransactionsOnProducts[]
 
