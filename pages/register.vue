@@ -1,39 +1,29 @@
 <script setup lang="ts">
-import type { RouterOutput } from '~~/types/RouterOutput'
-import type { ErrorOutput } from '~~/types/ErrorOutput'
+import type { TRPCError } from '@trpc/server'
 
 const pending = ref(false)
 const errorMessage = ref<string | null>(null)
 
 async function registerAccount(event: Event) {
   pending.value = true
-  const { elements } = event.currentTarget as any
-  function getValue(name: string) {
-    return elements.namedItem(name).value as string
-  }
-  const restaurantName = getValue('restaurantName')
-  const email = getValue('email')
-  const password = getValue('password')
 
-  type RegisterOutput = RouterOutput['register']
+  const restaurantName = getValueFromEvent(event, 'restaurantName')
+  const email = getValueFromEvent(event, 'email')
+  const password = getValueFromEvent(event, 'password')
   const { $client } = useNuxtApp()
-
-  const { data, error } = await useAsyncData<RegisterOutput, ErrorOutput>(() =>
-    $client.register.mutate({
+  try {
+    await $client.register.mutate({
       restaurantName,
       email,
       password,
     })
-  )
-  if (data || error) {
+  } catch (error) {
+    const { message } = error as TRPCError
+    errorMessage.value = message
     pending.value = false
-  }
-
-  if (error) {
-    errorMessage.value = error.value?.message || 'Unknown error.'
     return
   }
-
+  pending.value = false
   alert('Register success.')
 }
 </script>
@@ -49,17 +39,8 @@ async function registerAccount(event: Event) {
       maxlength="20"
       required
     />
-    <Email />
-
-    <label for="password">Password</label>
-    <input
-      name="password"
-      id="password"
-      type="password"
-      minlength="8"
-      maxlength="100"
-      required
-    />
+    <EmailInputGroup />
+    <PasswordInputGroup />
 
     <button type="submit">
       <span v-if="pending">Registering...</span>
@@ -67,4 +48,5 @@ async function registerAccount(event: Event) {
     </button>
   </form>
   <span v-if="errorMessage">{{ errorMessage }}</span>
+  <NuxtLink to="login">Login</NuxtLink>
 </template>

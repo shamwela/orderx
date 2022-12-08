@@ -2,8 +2,8 @@ import { z } from 'zod'
 import { procedure } from '../trpc'
 import { TRPCError } from '@trpc/server'
 import { prisma } from '~~/prisma/prisma'
-import { emailSchema } from '~~/utilities/emailSchema'
-import { passwordSchema } from '~~/utilities/passwordSchema'
+import { emailSchema } from '~~/utils/emailSchema'
+import { passwordSchema } from '~~/utils/passwordSchema'
 import bcrypt from 'bcrypt'
 
 export const register = procedure
@@ -19,7 +19,8 @@ export const register = procedure
     const user = await prisma.user.findUnique({ where: { email } })
     if (user) {
       throw new TRPCError({
-        message: 'Email already registered.',
+        message:
+          'You already have an account with that email. Please login instead.',
         code: 'BAD_REQUEST',
       })
     }

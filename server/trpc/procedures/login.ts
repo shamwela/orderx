@@ -2,8 +2,8 @@ import { z } from 'zod'
 import { procedure } from '../trpc'
 import { TRPCError } from '@trpc/server'
 import { prisma } from '~~/prisma/prisma'
-import { emailSchema } from '~~/utilities/emailSchema'
-import { passwordSchema } from '~~/utilities/passwordSchema'
+import { emailSchema } from '~~/utils/emailSchema'
+import { passwordSchema } from '~~/utils/passwordSchema'
 import bcrypt from 'bcrypt'
 
 export const login = procedure

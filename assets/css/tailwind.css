@@ -8,8 +8,4 @@
   h3 {
     @apply text-3xl font-medium;
   }
-
-  label {
-    @apply font-medium;
-  }
 }
