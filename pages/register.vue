@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { TRPCClientError } from '@trpc/client'
-import { inferRouterOutputs, TRPCError } from '@trpc/server'
-import type { AppRouter } from '@/server/trpc/routers'
+import type { RouterOutput } from '~~/types/RouterOutput'
+import type { ErrorOutput } from '~~/types/ErrorOutput'
 
 const pending = ref(false)
 const errorMessage = ref<string | null>(null)
@@ -16,9 +15,7 @@ async function registerAccount(event: Event) {
   const email = getValue('email')
   const password = getValue('password')
 
-  type RouterOutput = inferRouterOutputs<AppRouter>
   type RegisterOutput = RouterOutput['register']
-  type ErrorOutput = TRPCClientError<AppRouter>
   const { $client } = useNuxtApp()
 
   const { data, error } = await useAsyncData<RegisterOutput, ErrorOutput>(() =>
@@ -32,7 +29,7 @@ async function registerAccount(event: Event) {
     pending.value = false
   }
 
-  if (error instanceof TRPCError) {
+  if (error) {
     errorMessage.value = error.value?.message || 'Unknown error.'
     return
   }
@@ -52,16 +49,7 @@ async function registerAccount(event: Event) {
       maxlength="20"
       required
     />
-
-    <label for="email">Email</label>
-    <input
-      name="email"
-      id="email"
-      type="email"
-      minlength="3"
-      maxlength="254"
-      required
-    />
+    <Email />
 
     <label for="password">Password</label>
     <input
