@@ -2,7 +2,6 @@
 import type { TRPCError } from '@trpc/server'
 
 const pending = ref(false)
-const errorMessage = ref<string | null>(null)
 
 async function registerAccount(event: Event) {
   pending.value = true
@@ -18,9 +17,10 @@ async function registerAccount(event: Event) {
       password,
     })
   } catch (error) {
-    const { message } = error as TRPCError
-    errorMessage.value = message
     pending.value = false
+    console.error(error)
+    const { message } = error as TRPCError
+    alert(message)
     return
   }
   pending.value = false
@@ -47,6 +47,5 @@ async function registerAccount(event: Event) {
       <span v-else>Register</span>
     </button>
   </form>
-  <span v-if="errorMessage">{{ errorMessage }}</span>
   <NuxtLink to="login">Login</NuxtLink>
 </template>
