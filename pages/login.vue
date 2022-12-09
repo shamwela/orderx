@@ -37,5 +37,6 @@ async function login(event: Event) {
       <span v-else>Login</span>
     </button>
   </form>
+  <span v-if="errorMessage">{{ errorMessage }}</span>
   <NuxtLink to="register">Register</NuxtLink>
 </template>
