@@ -66,6 +66,8 @@ model TransactionsOnProducts {
   productId String
   product   Product @relation(fields: [productId], references: [id])
 
+  quantity Int
+
   @@id([transactionId, productId])
   @@index([transactionId])
   @@index([productId])
