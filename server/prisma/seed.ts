@@ -1,4 +1,4 @@
-import { prisma } from './prisma'
+import { prisma } from './prismaClient'
 import { restaurants, users, products } from './seedData'
 
 async function main() {
