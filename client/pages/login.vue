@@ -8,11 +8,12 @@ async function login(event: Event) {
   const password = getValueFromEvent(event, 'password')
   try {
     await useMyFetch('login', {
+      method: 'post',
       body: {
         email,
         password,
       },
-      credentials: 'include'
+      credentials: 'include',
     })
   } catch (error) {
     pending.value = false
