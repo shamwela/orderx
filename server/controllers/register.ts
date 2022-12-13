@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import bcrypt from 'bcrypt'
+import { setJwtCookie } from '../utilities/setJwtCookie'
 
 export async function register(request: Request, response: Response) {
   type RegisterInput = {
@@ -39,5 +40,5 @@ export async function register(request: Request, response: Response) {
       message: 'Database or Prisma error.',
     })
   }
-  return response.status(201).json({ success: true })
+  setJwtCookie(user, response)
 }
