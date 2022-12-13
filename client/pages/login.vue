@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { TRPCError } from '@trpc/server'
-
 const pending = ref(false)
 
 async function login(event: Event) {
@@ -8,17 +6,18 @@ async function login(event: Event) {
 
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
-  const { $client } = useNuxtApp()
   try {
-    await $client.login.mutate({
-      email,
-      password,
+    await useMyFetch('login', {
+      body: {
+        email,
+        password,
+      },
     })
   } catch (error) {
     pending.value = false
-    console.error(error)
-    const { message } = error as TRPCError
+    const message = getErrorMessage(error)
     alert(message)
+    console.error(error)
     return
   }
 

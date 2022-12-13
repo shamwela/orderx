@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { TRPCError } from '@trpc/server'
-
 const pending = ref(false)
 
 async function registerAccount(event: Event) {
@@ -9,18 +7,13 @@ async function registerAccount(event: Event) {
   const restaurantName = getValueFromEvent(event, 'restaurantName')
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
-  const { $client } = useNuxtApp()
   try {
-    await $client.register.mutate({
-      restaurantName,
-      email,
-      password,
-    })
+    await useMyFetch('register', { body: { restaurantName, email, password } })
   } catch (error) {
     pending.value = false
-    console.error(error)
-    const { message } = error as TRPCError
+    const message = getErrorMessage(error)
     alert(message)
+    console.error(error)
     return
   }
   pending.value = false

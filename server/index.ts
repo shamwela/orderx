@@ -5,6 +5,9 @@ import { rateLimit } from 'express-rate-limit'
 import xssClean from 'xss-clean'
 import helmet from 'helmet'
 import { register } from './controllers/register'
+import { login } from './controllers/login'
+import { order } from './controllers/order'
+import { getAllProducts } from './controllers/products'
 
 const app = express()
 app.use(
@@ -26,6 +29,9 @@ app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.post('/login', login)
+app.post('/order', order)
+app.get('/products', getAllProducts)
 app.post('/register', register)
 app.use((request, response) =>
   response.status(404).json({ message: 'Page not found.' })

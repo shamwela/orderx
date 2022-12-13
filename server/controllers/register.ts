@@ -39,5 +39,5 @@ export async function register(request: Request, response: Response) {
       message: 'Database or Prisma error.',
     })
   }
-  return { success: true }
+  return response.status(201).json({ success: true })
 }
