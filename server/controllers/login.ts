@@ -19,5 +19,5 @@ export async function login(request: Request, response: Response) {
   if (!passwordMatched) {
     return response.status(401).json({ message: 'Wrong password.' })
   }
-  return response.status(200).json({ success: true })
+  return response.status(200).cookie('test', 123)
 }

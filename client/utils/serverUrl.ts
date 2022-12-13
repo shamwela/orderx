@@ -1,2 +1,4 @@
-// Add the production server URL later
-export const serverUrl = 'http://localhost:2000/'
+export const serverUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://orderx-server.up.railway.app/'
+    : 'http://localhost:2000/'

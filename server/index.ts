@@ -8,6 +8,7 @@ import { register } from './controllers/register'
 import { login } from './controllers/login'
 import { order } from './controllers/order'
 import { getAllProducts } from './controllers/products'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 app.use(
@@ -28,6 +29,7 @@ app.use(xssClean())
 app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 app.post('/login', login)
 app.post('/order', order)
