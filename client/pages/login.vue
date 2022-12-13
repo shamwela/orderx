@@ -12,6 +12,7 @@ async function login(event: Event) {
         email,
         password,
       },
+      credentials: 'include'
     })
   } catch (error) {
     pending.value = false
