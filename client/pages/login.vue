@@ -7,7 +7,7 @@ async function login(event: Event) {
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
   try {
-    await useMyFetch('login', {
+    const { data } = await useMyFetch('login', {
       method: 'post',
       body: {
         email,
@@ -15,10 +15,11 @@ async function login(event: Event) {
       },
       credentials: 'include',
     })
+    console.log(data.value)
   } catch (error) {
     pending.value = false
-    const message = getErrorMessage(error)
-    alert(message)
+    // const message = getErrorMessage(error)
+    // alert(error.message)
     console.error(error)
     return
   }
@@ -30,7 +31,7 @@ async function login(event: Event) {
 
 <template>
   <h1>OrderX Login</h1>
-  <form @submit.prevent="login">
+  <form @submit.prevent="login" class="flex flex-col gap-y-4">
     <EmailInputGroup />
     <PasswordInputGroup />
     <button type="submit">

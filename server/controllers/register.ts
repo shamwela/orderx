@@ -22,8 +22,8 @@ export async function register(request: Request, response: Response) {
         name: restaurantName,
       },
     })
-    const hashedPassword = await bcrypt.hash(password, 10)
     const restaurantId = restaurant.id
+    const hashedPassword = await bcrypt.hash(password, 10)
     await prisma.user.create({
       data: {
         id: 'admin',

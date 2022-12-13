@@ -19,7 +19,11 @@ export async function login(request: Request, response: Response) {
   if (!passwordMatched) {
     return response.status(401).json({ message: 'Wrong password.' })
   }
-  return response.status(200).cookie('test', 123, {
-    domain: 'railway.app',
-  })
+  return response
+    .status(200)
+    .cookie('test', 123, {
+      domain:
+        process.env.NODE_ENV === 'production' ? 'railway.app' : 'localhost',
+    })
+    .json({ success: true })
 }
