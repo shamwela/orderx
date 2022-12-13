@@ -1,4 +1,10 @@
 <script setup lang="ts">
+const loggedIn = useLoggedIn()
+if (loggedIn) {
+  // Later, redirect cashier, cook, admin accordingly
+  await navigateTo('/cashier')
+}
+
 const pending = ref(false)
 
 async function registerAccount(event: Event) {
@@ -17,7 +23,6 @@ async function registerAccount(event: Event) {
     return
   }
   pending.value = false
-  alert('Register success.')
 }
 </script>
 

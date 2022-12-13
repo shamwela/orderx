@@ -25,7 +25,7 @@ export async function register(request: Request, response: Response) {
     })
     const restaurantId = restaurant.id
     const hashedPassword = await bcrypt.hash(password, 10)
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         id: 'admin',
         name: 'Admin',
@@ -35,10 +35,10 @@ export async function register(request: Request, response: Response) {
         password: hashedPassword,
       },
     })
+    setJwtCookie(user, response)
   } catch (error) {
     return response.status(500).json({
       message: 'Database or Prisma error.',
     })
   }
-  setJwtCookie(user, response)
 }

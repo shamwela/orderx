@@ -16,6 +16,7 @@ export function useMyFetch<T>(
 ) {
   return useFetch<T>(request, {
     baseURL: serverUrl,
+    credentials: 'include',
     ...options,
   })
 }

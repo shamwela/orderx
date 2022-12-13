@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply p-4;
+  }
+
   h1,
   h2,
   h3 {
