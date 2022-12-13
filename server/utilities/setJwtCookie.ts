@@ -15,7 +15,7 @@ export function setJwtCookie(user: User, response: Response) {
       // To prevent cross site scripting attacks,
       // disallow accessing this cookie using JavaScript
       httpOnly: true,
-      secure: true,
+      // secure: true,
       maxAge: sixMonthsInMilliseconds,
     })
     .json({ success: true })

@@ -9,6 +9,7 @@ import { login } from './controllers/login'
 import { order } from './controllers/order'
 import { getAllProducts } from './controllers/products'
 import cookieParser from 'cookie-parser'
+import { logout } from './controllers/logout'
 
 const app = express()
 app.use(
@@ -35,6 +36,7 @@ app.post('/login', login)
 app.post('/order', order)
 app.get('/products', getAllProducts)
 app.post('/register', register)
+app.get('/logout', logout)
 app.use((request, response) =>
   response.status(404).json({ message: 'Page not found.' })
 )
