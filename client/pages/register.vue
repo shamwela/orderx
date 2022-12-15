@@ -13,16 +13,13 @@ async function registerAccount(event: Event) {
   const restaurantName = getValueFromEvent(event, 'restaurantName')
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
-  try {
-    await useMyFetch('register', { body: { restaurantName, email, password } })
-  } catch (error) {
-    pending.value = false
-    const message = getErrorMessage(error)
-    alert(message)
-    console.error(error)
-    return
-  }
+  const { error } = await useMyFetch('register', {
+    body: { restaurantName, email, password },
+  })
   pending.value = false
+  if (error) {
+    handleError(error)
+  }
 }
 </script>
 

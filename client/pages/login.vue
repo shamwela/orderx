@@ -6,20 +6,18 @@ async function login(event: Event) {
 
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
-  try {
-    await useMyFetch('login', {
-      method: 'post',
-      body: {
-        email,
-        password,
-      },
-    })
-  } catch (error) {
-    pending.value = false
-    console.error(error)
-    return
-  }
+
+  const { error } = await useMyFetch('login', {
+    method: 'post',
+    body: {
+      email,
+      password,
+    },
+  })
   pending.value = false
+  if (error) {
+    handleError(error)
+  }
 }
 </script>
 

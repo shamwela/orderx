@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import type { CartItem } from '~~/types/CartItem'
 
-const { data: products } = await useMyFetch('products')
+const { error, data: products } = await useMyFetch('products')
+if (error) {
+  handleError(error)
+}
 
 const cart = ref<CartItem[]>([])
-const ordering = ref(false)
+const pending = ref(false)
 
 function addToCart(newCartItem: CartItem) {
   cart.value.push(newCartItem)
 }
 
 async function order() {
-  ordering.value = true
-  try {
-    await useMyFetch('order', { body: cart.value })
-  } catch (error) {
-    ordering.value = false
-    console.error(error)
-    alert('An error happened. Please contact your admin.')
+  pending.value = true
+  const { error } = await useMyFetch('order', { body: cart.value })
+  pending.value = false
+  if (error) {
+    handleError(error)
     return
   }
-  ordering.value = false
   cart.value = []
   alert('Order successful.')
 }
@@ -41,7 +41,7 @@ async function order() {
         <span>{{ quantity }}</span>
       </div>
       <button @click="order">
-        <span v-if="ordering">Ordering...</span>
+        <span v-if="pending">Ordering...</span>
         <span v-else>Order</span>
       </button>
     </div>
