@@ -24,51 +24,57 @@ enum Role {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  name         String        @db.VarChar(100)
-  email        String        @unique @db.VarChar(254)
-  password     String        @db.VarChar(100)
+  id           String     @id @default(uuid())
+  name         String     @db.VarChar(100)
+  email        String     @unique @db.VarChar(254)
+  password     String     @db.VarChar(100)
   role         Role
   restaurantId String
-  Restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
-  transactions Transaction[]
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  orders       Order[]
 
   @@index([name])
   @@index([restaurantId])
 }
 
 model Product {
-  id           String                   @id @default(uuid())
-  name         String                   @db.VarChar(50)
-  cost         Decimal                  @db.Decimal(10, 2)
-  price        Decimal                  @db.Decimal(10, 2)
+  id           String             @id @default(uuid())
+  name         String             @db.VarChar(50)
+  cost         Decimal            @db.Decimal(10, 2)
+  price        Decimal            @db.Decimal(10, 2)
   restaurantId String
-  Restaurant   Restaurant               @relation(fields: [restaurantId], references: [id])
-  transactions TransactionsOnProducts[]
+  Restaurant   Restaurant         @relation(fields: [restaurantId], references: [id])
+  orders       OrdersOnProducts[]
 
   @@index([name])
   @@index([restaurantId])
 }
 
-model Transaction {
-  id        String                   @id @default(uuid())
+enum OrderType {
+  dine_in
+  take_out
+}
+
+model Order {
+  id        String             @id @default(uuid())
   cashierId String
-  User      User                     @relation(fields: [cashierId], references: [id])
-  products  TransactionsOnProducts[]
+  type      OrderType
+  User      User               @relation(fields: [cashierId], references: [id])
+  products  OrdersOnProducts[]
 
   @@index([cashierId])
 }
 
-model TransactionsOnProducts {
-  transactionId String
-  transaction   Transaction @relation(fields: [transactionId], references: [id])
+model OrdersOnProducts {
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
 
   productId String
   product   Product @relation(fields: [productId], references: [id])
 
   quantity Int
 
-  @@id([transactionId, productId])
-  @@index([transactionId])
+  @@id([orderId, productId])
+  @@index([orderId])
   @@index([productId])
 }

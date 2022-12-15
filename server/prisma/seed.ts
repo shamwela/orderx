@@ -2,8 +2,8 @@ import { prisma } from './prismaClient'
 import { restaurants, users, products } from './seedData'
 
 async function main() {
-  await prisma.transactionsOnProducts.deleteMany()
-  await prisma.transaction.deleteMany()
+  await prisma.ordersOnProducts.deleteMany()
+  await prisma.order.deleteMany()
   await prisma.product.deleteMany()
   await prisma.user.deleteMany()
   await prisma.restaurant.deleteMany()
