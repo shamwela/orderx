@@ -10,6 +10,7 @@ import { order } from './controllers/order'
 import { getAllProducts } from './controllers/products'
 import cookieParser from 'cookie-parser'
 import { logout } from './controllers/logout'
+import { rejectUnauthenticatedRequests } from './middlewares/rejectUnauthenticatedRequests'
 
 const app = express()
 app.use(
@@ -32,13 +33,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-app.post('/login', login)
-app.post('/order', order)
-app.get('/products', getAllProducts)
 app.post('/register', register)
+app.post('/login', login)
 app.get('/logout', logout)
+app.post('/order', rejectUnauthenticatedRequests, order)
+app.get('/products', rejectUnauthenticatedRequests, getAllProducts)
+
 app.use((request, response) =>
-  response.status(404).json({ message: 'Page not found.' })
+  response.status(404).json({ message: 'This route does not exist.' })
 )
 
 const port = process.env.PORT || 2000

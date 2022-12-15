@@ -2,7 +2,7 @@
 import type { CartItem } from '~~/types/CartItem'
 
 const { error, data: products } = await useMyFetch('products')
-if (error) {
+if (error.value) {
   handleError(error)
 }
 
@@ -17,7 +17,7 @@ async function order() {
   pending.value = true
   const { error } = await useMyFetch('order', { body: cart.value })
   pending.value = false
-  if (error) {
+  if (error.value) {
     handleError(error)
     return
   }
@@ -27,7 +27,7 @@ async function order() {
 </script>
 
 <template>
-  <div>
+  <div v-if="!error">
     <div v-for="{ id, name } in products" class="flex gap-x-4">
       <Product :id="id" :name="name" :addToCart="addToCart" />
     </div>

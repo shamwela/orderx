@@ -15,9 +15,14 @@ async function login(event: Event) {
     },
   })
   pending.value = false
-  if (error) {
+
+  if (error.value) {
     handleError(error)
+    return
   }
+
+  // Later redirect according to the user role
+  await navigateTo('/cashier')
 }
 </script>
 

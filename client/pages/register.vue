@@ -17,7 +17,7 @@ async function registerAccount(event: Event) {
     body: { restaurantName, email, password },
   })
   pending.value = false
-  if (error) {
+  if (error.value) {
     handleError(error)
   }
 }

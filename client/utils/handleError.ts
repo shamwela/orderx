@@ -1,5 +1,7 @@
 export function handleError(error: any) {
   const errorMessage = error.value?.response?._data.message
-  alert(errorMessage)
+  if (process.client) {
+    alert(errorMessage)
+  }
   console.error(errorMessage)
 }
