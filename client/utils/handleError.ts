@@ -3,5 +3,5 @@ export function handleError(error: any) {
   if (process.client) {
     alert(errorMessage)
   }
-  console.error(errorMessage)
+  console.error(error.value)
 }
