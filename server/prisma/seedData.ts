@@ -33,7 +33,7 @@ export let users: Prisma.UserCreateManyInput[] = [
 ]
 const saltRounds = 10
 bcrypt.hash('password123', saltRounds, function (error, hashedPassword) {
-  if (error.value) {
+  if (error) {
     console.error(error)
     return
   }
