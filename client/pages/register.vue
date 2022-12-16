@@ -13,7 +13,7 @@ async function registerAccount(event: Event) {
   const restaurantName = getValueFromEvent(event, 'restaurantName')
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
-  const { error } = await useMyFetch('register', {
+  const { error } = await useMyFetch('/register', {
     body: { restaurantName, email, password },
   })
   pending.value = false

@@ -45,14 +45,12 @@ export const products: Prisma.ProductCreateManyInput[] = [
   {
     id: '1',
     name: 'Tea',
-    cost: 0.5,
     price: 1,
     restaurantId: '1',
   },
   {
     id: '2',
     name: 'Fried rice',
-    cost: 1,
     price: 2,
     restaurantId: '1',
   },

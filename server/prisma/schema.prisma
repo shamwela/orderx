@@ -40,7 +40,6 @@ model User {
 model Product {
   id           String             @id @default(uuid())
   name         String             @db.VarChar(50)
-  cost         Decimal            @db.Decimal(10, 2)
   price        Decimal            @db.Decimal(10, 2)
   restaurantId String
   Restaurant   Restaurant         @relation(fields: [restaurantId], references: [id])

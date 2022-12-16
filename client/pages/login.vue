@@ -7,7 +7,7 @@ async function login(event: Event) {
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
 
-  const { error } = await useMyFetch('login', {
+  const { error } = await useMyFetch('/login', {
     method: 'post',
     body: {
       email,

@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { prisma } from '../prisma/prismaClient'
+import { prisma } from '../../prisma/prismaClient'
 
 export async function getAllProducts(request: Request, response: Response) {
   const products = await prisma.product.findMany()

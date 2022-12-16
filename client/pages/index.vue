@@ -5,7 +5,7 @@ if (loggedIn) {
   await navigateTo('/cashier')
 }
 // async function logout() {
-//   await useMyFetch('logout')
+//   await useMyFetch('/logout')
 // }
 </script>
 

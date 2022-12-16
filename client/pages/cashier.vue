@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CartItem } from '~~/types/CartItem'
 
-const { error, data: products } = await useMyFetch('products')
+const { error, data: products } = await useMyFetch('/product')
 if (error.value) {
   handleError(error)
 }
@@ -15,7 +15,7 @@ function addToCart(newCartItem: CartItem) {
 
 async function order() {
   pending.value = true
-  const { error } = await useMyFetch('order', {
+  const { error } = await useMyFetch('/order', {
     method: 'post',
     body: cart.value,
   })
@@ -44,7 +44,7 @@ async function order() {
         <span>{{ name }}</span>
         <span>{{ quantity }}</span>
       </div>
-      <button @click="order">
+      <button @click="order" :disabled="pending">
         <span v-if="pending">Ordering...</span>
         <span v-else>Order</span>
       </button>
