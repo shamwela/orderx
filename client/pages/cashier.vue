@@ -15,7 +15,10 @@ function addToCart(newCartItem: CartItem) {
 
 async function order() {
   pending.value = true
-  const { error } = await useMyFetch('order', { body: cart.value })
+  const { error } = await useMyFetch('order', {
+    method: 'post',
+    body: cart.value,
+  })
   pending.value = false
   if (error.value) {
     handleError(error)
@@ -27,7 +30,8 @@ async function order() {
 </script>
 
 <template>
-  <div v-if="!error">
+  <span v-if="error">Couldn't fetch product data.</span>
+  <div v-else>
     <div v-for="{ id, name } in products" class="flex gap-x-4">
       <Product :id="id" :name="name" :addToCart="addToCart" />
     </div>

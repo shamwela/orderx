@@ -13,6 +13,9 @@ import { logout } from './controllers/logout'
 import { rejectUnauthenticatedRequests } from './middlewares/rejectUnauthenticatedRequests'
 
 const app = express()
+app.use(cookieParser())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(
   cors({
     origin: clientUrl,
@@ -29,15 +32,12 @@ app.use(
 )
 app.use(xssClean())
 app.use(helmet())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
 
 app.post('/register', register)
 app.post('/login', login)
 app.get('/logout', logout)
 app.post('/order', rejectUnauthenticatedRequests, order)
-app.get('/products', rejectUnauthenticatedRequests, getAllProducts)
+app.get('/products', getAllProducts)
 
 app.use((request, response) =>
   response.status(404).json({ message: 'This route does not exist.' })

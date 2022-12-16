@@ -15,6 +15,8 @@ export function setJwtCookie(user: User, response: Response) {
     .cookie('jwt', jwt, {
       domain: clientDomain,
       maxAge: sixMonthsInMilliseconds,
+      sameSite: 'none',
+      secure: true,
     })
     .json({ success: true })
 }
