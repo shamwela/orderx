@@ -13,6 +13,7 @@ import { logout } from './controllers/logout'
 import { rejectUnauthenticatedRequests } from './middlewares/rejectUnauthenticatedRequests'
 import { createProduct } from './controllers/product/create'
 import { adminOnly } from './middlewares/adminOnly'
+import { deleteProduct } from './controllers/product/delete'
 
 const app = express()
 app.use(cookieParser())
@@ -49,6 +50,12 @@ app.post(
 )
 // All product information is public
 app.get('/product/read', readProducts)
+app.delete(
+  '/product/delete',
+  rejectUnauthenticatedRequests,
+  adminOnly,
+  deleteProduct
+)
 
 app.use((request, response) =>
   response.status(404).json({ message: 'This route does not exist.' })
