@@ -23,7 +23,13 @@ async function deleteProduct(id: string) {
   <div v-else>
     <h1>Products</h1>
 
-    <div v-for="{ id, name, price } in products" class="flex gap-x-4">
+    <NuxtLink to="/product/create">Create a new product</NuxtLink>
+    <hr />
+
+    <div
+      v-for="{ id, name, price } in products"
+      class="flex gap-x-4 items-center"
+    >
       <span>{{ name }}</span>
       <span>${{ price }}</span>
       <button @click="deleteProduct(id)">Delete</button>
