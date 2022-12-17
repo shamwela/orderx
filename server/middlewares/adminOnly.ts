@@ -1,12 +1,14 @@
 import { JwtUserPayload } from './../types/JwtUserPayload'
 import type { Request, Response, NextFunction } from 'express'
 import jwtLibrary from 'jsonwebtoken'
+import { rejectUnauthenticatedRequests } from './rejectUnauthenticatedRequests'
 
 export function adminOnly(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
+  rejectUnauthenticatedRequests(request, response, next)
   const jwt = request.cookies?.jwt
   const jwtSecret = process.env.JWT_SECRET as string
   let jwtUserPayload: JwtUserPayload

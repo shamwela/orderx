@@ -7,6 +7,8 @@ export function rejectUnauthenticatedRequests(
   next: NextFunction
 ) {
   const jwt = request.cookies?.jwt
+  console.log(jwt)
+
   const jwtSecret = process.env.JWT_SECRET as string
   try {
     jwtLibrary.verify(jwt, jwtSecret)
