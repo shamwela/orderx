@@ -10,6 +10,14 @@ if (error.value) {
 }
 
 const cart = ref<CartItem[]>([])
+const total = computed(() =>
+  cart.value.reduce((previousTotal, item) => {
+    const { price, quantity } = item
+    const currentTotal = price * quantity
+    const finalTotal = currentTotal + previousTotal
+    return finalTotal
+  }, 0)
+)
 const pending = ref(false)
 
 function addToCart(newCartItem: CartItem) {
@@ -36,8 +44,16 @@ async function order(event: Event) {
 <template>
   <span v-if="error">Couldn't fetch product data.</span>
   <div v-else>
-    <div v-for="{ id, name } in products" class="flex gap-x-4 items-center">
-      <Product :id="id" :name="name" :addToCart="addToCart" />
+    <div
+      v-for="{ id, name, price } in products"
+      class="flex gap-x-4 items-center"
+    >
+      <Product
+        :id="id"
+        :name="name"
+        :price="Number(price)"
+        :addToCart="addToCart"
+      />
     </div>
     <hr />
 
@@ -48,19 +64,26 @@ async function order(event: Event) {
         <span>{{ name }}</span>
         <span>{{ quantity }}</span>
       </div>
-      <form @submit.prevent="order">
-        <!-- Order Type -->
-        <input
-          type="radio"
-          name="orderType"
-          id="dine_in"
-          value="dine_in"
-          checked
-        />
-        <label for="dine_in">Dine-in</label>
 
-        <input type="radio" name="orderType" id="take_out" value="take_out" />
-        <label for="take_out">Take-out</label>
+      <h2>Total = ${{ total }}</h2>
+
+      <form @submit.prevent="order" class="flex flex-col gap-y-[inherit]">
+        <!-- Order Type -->
+        <div>
+          <input
+            type="radio"
+            name="orderType"
+            id="dine_in"
+            value="dine_in"
+            checked
+          />
+          <label for="dine_in">Dine-in</label>
+        </div>
+
+        <div>
+          <input type="radio" name="orderType" id="take_out" value="take_out" />
+          <label for="take_out">Take-out</label>
+        </div>
 
         <button :disabled="pending" type="submit">
           <span v-if="pending">Ordering...</span>
