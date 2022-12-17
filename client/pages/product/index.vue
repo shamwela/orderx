@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const { error, data: products } = await useMyFetch('/product/read')
+import { Product } from '~~/types/Product'
+
+const { error, data: products } = await useMyFetch<Product[]>(
+  '/product/read-all'
+)
 if (error.value) {
   handleError(error)
 }
@@ -32,6 +36,7 @@ async function deleteProduct(id: string) {
     >
       <span>{{ name }}</span>
       <span>${{ price }}</span>
+      <NuxtLink :to="'/product/edit/' + id">Edit</NuxtLink>
       <button @click="deleteProduct(id)">Delete</button>
     </div>
   </div>

@@ -7,7 +7,9 @@ import helmet from 'helmet'
 import { register } from './controllers/register'
 import { login } from './controllers/login'
 import { order } from './controllers/order'
-import { readProducts } from './controllers/product/read'
+import { readAllProducts } from './controllers/product/readAll'
+import { readProduct } from './controllers/product/read'
+import { updateProduct } from './controllers/product/update'
 import cookieParser from 'cookie-parser'
 import { logout } from './controllers/logout'
 import { rejectUnauthenticatedRequests } from './middlewares/rejectUnauthenticatedRequests'
@@ -49,7 +51,9 @@ app.post(
   createProduct
 )
 // All product information is public
-app.get('/product/read', readProducts)
+app.get('/product/read-all', readAllProducts)
+app.get('/product/read', readProduct)
+app.put('/product/update', updateProduct)
 app.delete(
   '/product/delete',
   rejectUnauthenticatedRequests,

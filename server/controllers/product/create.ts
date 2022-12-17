@@ -7,12 +7,7 @@ export async function createProduct(request: Request, response: Response) {
     name: string
     price: number
   }
-  const productInput: ProductInput | undefined = request.body
-  if (!productInput) {
-    return response
-      .status(400)
-      .json({ message: 'Provide the product input in the request body.' })
-  }
+  const productInput: ProductInput = request.body
   const { restaurantId } = getJwtUserPayload(request)
 
   try {

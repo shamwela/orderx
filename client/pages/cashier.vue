@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { CartItem } from '~~/types/CartItem'
+import { Product } from '~~/types/Product'
 
-const { error, data: products } = await useMyFetch('/product/read')
+const { error, data: products } = await useMyFetch<Product[]>('/product/read-all')
 if (error.value) {
   handleError(error)
 }
