@@ -18,7 +18,7 @@ const increment = () => quantity.value++
 <template>
   <span>{{ name }}</span>
 
-  <button @click="decrement">-</button>
+  <button @click="decrement" :disabled="quantity === 1">-</button>
   <span>{{ quantity }}</span>
   <button @click="increment">+</button>
 

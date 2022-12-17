@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import { getJwtUserPayload } from '../utilities/getJwtUserPayload'
+import type { OrderType } from '@prisma/client'
 
 export async function order(request: Request, response: Response) {
   const { id, role } = getJwtUserPayload(request)
@@ -11,21 +12,25 @@ export async function order(request: Request, response: Response) {
   }
   const cashierId = id
 
-  const order = await prisma.order.create({
-    data: {
-      cashierId,
-      // Get the order type from the client later
-      type: 'dine_in',
-    },
-  })
-  const orderId = order.id
-
   type CartItem = {
     id: string
     name: string
     quantity: number
   }
-  const cart: CartItem[] = request.body
+  type Body = {
+    cart: CartItem[]
+    orderType: OrderType
+  }
+  const body: Body = request.body
+  const { cart, orderType } = body
+  const order = await prisma.order.create({
+    data: {
+      cashierId,
+      type: orderType,
+    },
+  })
+  const orderId = order.id
+
   cart.forEach(async (cartItem) => {
     const { id, quantity } = cartItem
     await prisma.ordersOnProducts.create({
