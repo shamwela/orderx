@@ -27,9 +27,14 @@ function addToCart(newCartItem: CartItem) {
 async function order(event: Event) {
   pending.value = true
   const orderType = getValueFromEvent(event, 'orderType')
+  const tableNumber = Number(getValueFromEvent(event, 'tableNumber'))
   const { error } = await useMyFetch('/order', {
     method: 'post',
-    body: { cart: cart.value, orderType },
+    body: {
+      cart: cart.value,
+      orderType,
+      tableNumber,
+    },
   })
   pending.value = false
   if (error.value) {
@@ -83,6 +88,18 @@ async function order(event: Event) {
         <div>
           <input type="radio" name="orderType" id="take_out" value="take_out" />
           <label for="take_out">Take-out</label>
+        </div>
+
+        <div>
+          <label for="tableNumber">Table number</label>
+          <input
+            id="tableNumber"
+            name="tableNumber"
+            type="number"
+            min="1"
+            step="1"
+            required
+          />
         </div>
 
         <button :disabled="pending" type="submit">

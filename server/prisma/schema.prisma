@@ -55,11 +55,12 @@ enum OrderType {
 }
 
 model Order {
-  id        String             @id @default(uuid())
-  cashierId String
-  type      OrderType
-  User      User               @relation(fields: [cashierId], references: [id])
-  products  OrdersOnProducts[]
+  id          String             @id @default(uuid())
+  cashierId   String
+  tableNumber Int                @db.SmallInt
+  type        OrderType
+  User        User               @relation(fields: [cashierId], references: [id])
+  products    OrdersOnProducts[]
 
   @@index([cashierId])
 }

@@ -20,13 +20,15 @@ export async function order(request: Request, response: Response) {
   type Body = {
     cart: CartItem[]
     orderType: OrderType
+    tableNumber: number
   }
   const body: Body = request.body
-  const { cart, orderType } = body
+  const { cart, orderType, tableNumber } = body
   const order = await prisma.order.create({
     data: {
       cashierId,
       type: orderType,
+      tableNumber,
     },
   })
   const orderId = order.id
