@@ -1,7 +1,7 @@
-import { clientDomain } from './clientDomain'
 import jwtLibrary from 'jsonwebtoken'
 import type { Response } from 'express'
 import type { JwtUserPayload } from '../types/JwtUserPayload'
+import { setCookie } from './setCookie'
 
 export function setJwtCookie(
   jwtUserPayload: JwtUserPayload,
@@ -9,14 +9,5 @@ export function setJwtCookie(
 ) {
   const jwtSecret = process.env.JWT_SECRET as string
   const jwt = jwtLibrary.sign(jwtUserPayload, jwtSecret)
-  const sixMonthsInMilliseconds = 15778800000
-  return response
-    .status(200)
-    .cookie('jwt', jwt, {
-      domain: clientDomain,
-      maxAge: sixMonthsInMilliseconds,
-      sameSite: 'none',
-      secure: true,
-    })
-    .json({ success: true })
+  setCookie('jwt', jwt, response)
 }

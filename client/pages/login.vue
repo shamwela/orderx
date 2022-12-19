@@ -21,8 +21,7 @@ async function login(event: Event) {
     return
   }
 
-  // Later redirect according to the user role
-  await navigateTo('/cashier')
+  await navigateAccordingToRole()
 }
 </script>
 

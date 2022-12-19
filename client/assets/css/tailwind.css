@@ -4,13 +4,24 @@
 
 @layer base {
   html {
-    @apply p-4;
+    @apply p-8 bg-slate-200;
+  }
+
+  h1,
+  h2,
+  h3,
+  label {
+    @apply font-bold;
+  }
+
+  input[type='radio'] + label {
+    @apply font-normal cursor-pointer;
   }
 
   h1,
   h2,
   h3 {
-    @apply text-3xl font-medium;
+    @apply text-3xl;
   }
 
   a {
@@ -18,7 +29,13 @@
   }
 
   button,
+  button[type='submit'],
+  input {
+    @apply rounded-lg;
+  }
+
+  button,
   button[type='submit'] {
-    @apply bg-blue-500 px-3 py-1 rounded-lg hover:bg-blue-400 disabled:cursor-not-allowed;
+    @apply bg-blue-500 px-3 py-1 hover:bg-blue-400 disabled:cursor-not-allowed max-w-fit;
   }
 }

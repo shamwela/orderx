@@ -47,8 +47,11 @@ async function order(event: Event) {
 </script>
 
 <template>
-  <span v-if="error">Couldn't fetch product data.</span>
-  <div v-else>
+  <span v-if="error">
+    Couldn't fetch the product data. Please contact your admin.
+  </span>
+  <div v-else class="flex flex-col gap-y-4">
+    <h1>Products</h1>
     <div
       v-for="{ id, name, price } in products"
       class="flex gap-x-4 items-center"
@@ -60,21 +63,20 @@ async function order(event: Event) {
         :addToCart="addToCart"
       />
     </div>
+
     <hr />
 
-    <span v-if="cart.length === 0">Cart is empty.</span>
-    <div v-else>
-      <h1>Cart</h1>
-      <div v-for="{ name, quantity } in cart" class="flex gap-x-4">
-        <span>{{ name }}</span>
-        <span>{{ quantity }}</span>
-      </div>
+    <h1>Cart</h1>
+    <div v-for="{ name, quantity } in cart">
+      <span>{{ name }}</span> x <span>{{ quantity }}</span>
+    </div>
 
-      <h2>Total = ${{ total }}</h2>
+    <h2>Total = ${{ total }}</h2>
 
-      <form @submit.prevent="order" class="flex flex-col gap-y-[inherit]">
-        <!-- Order Type -->
-        <div>
+    <form @submit.prevent="order" class="flex flex-col gap-y-[inherit]">
+      <div class="flex flex-col gap-y-2">
+        <strong>Order type</strong>
+        <div class="flex gap-x-2">
           <input
             type="radio"
             name="orderType"
@@ -84,29 +86,27 @@ async function order(event: Event) {
           />
           <label for="dine_in">Dine-in</label>
         </div>
-
-        <div>
+        <div class="flex gap-x-2">
           <input type="radio" name="orderType" id="take_out" value="take_out" />
           <label for="take_out">Take-out</label>
         </div>
+      </div>
 
-        <div>
-          <label for="tableNumber">Table number</label>
-          <input
-            id="tableNumber"
-            name="tableNumber"
-            type="number"
-            min="1"
-            step="1"
-            required
-          />
-        </div>
+      <label for="tableNumber">Table number</label>
+      <input
+        id="tableNumber"
+        name="tableNumber"
+        type="number"
+        min="1"
+        step="1"
+        required
+        class="w-20"
+      />
 
-        <button :disabled="pending" type="submit">
-          <span v-if="pending">Ordering...</span>
-          <span v-else>Order</span>
-        </button>
-      </form>
-    </div>
+      <button :disabled="pending" type="submit">
+        <span v-if="pending">Ordering...</span>
+        <span v-else>Order</span>
+      </button>
+    </form>
   </div>
 </template>

@@ -2,6 +2,7 @@ import type { Request, Response } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import bcrypt from 'bcrypt'
 import { setJwtCookie } from '../utilities/setJwtCookie'
+import { setCookie } from '../utilities/setCookie'
 
 export async function register(request: Request, response: Response) {
   type RegisterInput = {
@@ -35,7 +36,9 @@ export async function register(request: Request, response: Response) {
         password: hashedPassword,
       },
     })
+    setCookie('role', 'admin', response)
     setJwtCookie(user, response)
+    return response.json({ success: true })
   } catch (error) {
     return response.status(500).json({
       message: 'Database or Prisma error.',

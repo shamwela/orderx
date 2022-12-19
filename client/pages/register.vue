@@ -1,10 +1,4 @@
 <script setup lang="ts">
-const loggedIn = useLoggedIn()
-if (loggedIn) {
-  // Later, redirect cashier, cook, admin accordingly
-  await navigateTo('/cashier')
-}
-
 const pending = ref(false)
 
 async function registerAccount(event: Event) {
@@ -20,6 +14,7 @@ async function registerAccount(event: Event) {
   if (error.value) {
     handleError(error)
   }
+  await navigateTo('/product')
 }
 </script>
 
