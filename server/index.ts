@@ -1,4 +1,5 @@
-import { productRouter } from './routers/product'
+import { orderRouter } from './order/router'
+import { productRouter } from './product/router'
 import express from 'express'
 import cors from 'cors'
 import { clientUrl } from './utilities/clientUrl'
@@ -7,7 +8,6 @@ import xssClean from 'xss-clean'
 import helmet from 'helmet'
 import { register } from './controllers/register'
 import { login } from './controllers/login'
-import { order } from './controllers/order'
 import cookieParser from 'cookie-parser'
 import { logout } from './controllers/logout'
 import { rejectUnauthenticatedRequests } from './middlewares/rejectUnauthenticatedRequests'
@@ -36,8 +36,8 @@ app.use(helmet())
 app.post('/register', register)
 app.post('/login', login)
 app.get('/logout', logout)
-app.post('/order', rejectUnauthenticatedRequests, order)
 app.use('/product', productRouter)
+app.use('/order', orderRouter)
 
 app.use((request, response) =>
   response.status(404).json({ message: 'This route does not exist.' })

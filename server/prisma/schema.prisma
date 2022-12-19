@@ -59,6 +59,7 @@ model Order {
   cashierId   String
   tableNumber Int                @db.SmallInt
   type        OrderType
+  pending     Boolean            @default(true)
   User        User               @relation(fields: [cashierId], references: [id])
   products    OrdersOnProducts[]
 

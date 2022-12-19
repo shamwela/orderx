@@ -28,7 +28,7 @@ async function order(event: Event) {
   pending.value = true
   const orderType = getValueFromEvent(event, 'orderType')
   const tableNumber = Number(getValueFromEvent(event, 'tableNumber'))
-  const { error } = await useMyFetch('/order', {
+  const { error } = await useMyFetch('/order/create', {
     method: 'post',
     body: {
       cart: cart.value,

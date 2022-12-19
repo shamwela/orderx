@@ -3,7 +3,7 @@ import { prisma } from '../prisma/prismaClient'
 import { getJwtUserPayload } from '../utilities/getJwtUserPayload'
 import type { OrderType } from '@prisma/client'
 
-export async function order(request: Request, response: Response) {
+export async function createOrder(request: Request, response: Response) {
   const { id, role } = getJwtUserPayload(request)
   if (role !== 'cashier') {
     return response

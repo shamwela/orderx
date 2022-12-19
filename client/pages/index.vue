@@ -1,6 +1,10 @@
 <script setup lang="ts">
+const role = useRole()
+
 async function logout() {
   await useMyFetch('/logout')
+  // Since the "role" is stored as a cookie, should reload
+  window.location.reload()
 }
 </script>
 

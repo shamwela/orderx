@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
-import { prisma } from '../../prisma/prismaClient'
-import { getJwtUserPayload } from '../../utilities/getJwtUserPayload'
+import { prisma } from '../prisma/prismaClient'
+import { getJwtUserPayload } from '../utilities/getJwtUserPayload'
 
 export async function createProduct(request: Request, response: Response) {
   type ProductInput = {
