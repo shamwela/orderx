@@ -5,10 +5,10 @@ import type { OrderType } from '@prisma/client'
 
 export const createOrder: Handler = async (request, response) => {
   const { id, role } = getJwtUserPayload(request)
-  if (role !== 'cashier') {
+  if (role === 'cook') {
     return response
       .status(403)
-      .json({ message: 'Only cashiers are allowed to order.' })
+      .json({ message: 'Cooks are not allowed to order.' })
   }
   const cashierId = id
 
