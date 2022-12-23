@@ -8,12 +8,9 @@ import xssClean from 'xss-clean'
 import helmet from 'helmet'
 import { register } from './controllers/register'
 import { login } from './controllers/login'
-import cookieParser from 'cookie-parser'
 import { logout } from './controllers/logout'
-import { rejectUnauthenticatedRequests } from './middlewares/rejectUnauthenticatedRequests'
 
 const app = express()
-app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(

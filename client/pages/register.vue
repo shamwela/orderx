@@ -7,13 +7,21 @@ async function registerAccount(event: Event) {
   const restaurantName = getValueFromEvent(event, 'restaurantName')
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
-  const { error } = await useMyFetch('/register', {
-    body: { restaurantName, email, password },
+  const { error, data: jwt } = await useMyFetch<string>('/register', {
+    body: {
+      restaurantName,
+      email,
+      password,
+    },
   })
   pending.value = false
-  if (error.value) {
+  if (error.value || typeof jwt.value !== 'string') {
     handleError(error)
+    return
   }
+  localStorage.setItem('jwt', jwt.value)
+  // This app always register an admin account
+  localStorage.setItem('role', 'admin')
   await navigateTo('/product')
 }
 </script>

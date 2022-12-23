@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import bcrypt from 'bcrypt'
-import { setJwtCookie } from '../utilities/setJwtCookie'
-import { setCookie } from '../utilities/setCookie'
+import { JwtUserPayload } from '../types/JwtUserPayload'
+import { generateJwt } from '../utilities/generateJwt'
 
 export async function register(request: Request, response: Response) {
   type RegisterInput = {
@@ -28,7 +28,6 @@ export async function register(request: Request, response: Response) {
     const hashedPassword = await bcrypt.hash(password, 10)
     const user = await prisma.user.create({
       data: {
-        id: 'admin',
         name: 'Admin',
         role: 'admin',
         email,
@@ -36,9 +35,14 @@ export async function register(request: Request, response: Response) {
         password: hashedPassword,
       },
     })
-    setCookie('role', 'admin', response)
-    setJwtCookie(user, response)
-    return response.json({ success: true })
+    const { id, role } = user
+    const jwtUserPayload: JwtUserPayload = {
+      id,
+      role,
+      restaurantId,
+    }
+    const jwt = generateJwt(jwtUserPayload)
+    return response.json(jwt)
   } catch (error) {
     return response.status(500).json({
       message: 'Database or Prisma error.',

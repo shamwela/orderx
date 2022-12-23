@@ -1,8 +1,8 @@
+import { JwtUserPayload } from './../types/JwtUserPayload'
 import type { Request, Response } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import bcrypt from 'bcrypt'
-import { setJwtCookie } from '../utilities/setJwtCookie'
-import { setCookie } from '../utilities/setCookie'
+import { generateJwt } from '../utilities/generateJwt'
 
 export async function login(request: Request, response: Response) {
   type LoginInput = {
@@ -25,8 +25,8 @@ export async function login(request: Request, response: Response) {
   if (!passwordMatched) {
     return response.status(401).json({ message: 'Wrong password.' })
   }
-  const { role } = user
-  setCookie('role', role, response)
-  setJwtCookie(user, response)
-  return response.json({ success: true })
+  const { id, role, restaurantId } = user
+  const jwtUserPayload: JwtUserPayload = { id, role, restaurantId }
+  const jwt = generateJwt(jwtUserPayload)
+  return response.json({ jwt, role })
 }

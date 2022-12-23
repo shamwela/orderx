@@ -5,10 +5,11 @@ import { updateProduct } from './update'
 import { deleteProduct } from './delete'
 import { Router } from 'express'
 import { adminOnly } from '../middlewares/adminOnly'
+import { rejectUnauthenticatedRequests } from '../middlewares/rejectUnauthenticatedRequests'
 
 export const productRouter = Router()
 productRouter.post('/create', adminOnly, createProduct)
-productRouter.get('/read-all', readAllProducts)
-productRouter.get('/read', readProduct)
+productRouter.get('/read-all', rejectUnauthenticatedRequests, readAllProducts)
+productRouter.get('/read', rejectUnauthenticatedRequests, readProduct)
 productRouter.put('/update', adminOnly, updateProduct)
 productRouter.delete('/delete', adminOnly, deleteProduct)

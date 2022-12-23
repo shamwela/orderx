@@ -1,2 +1,3 @@
-type Role = 'admin' | 'cashier' | 'cook'
-export const useRole = () => useCookie('role').value as Role
+import type { Role } from '~~/types/Role'
+
+export const useRole = () => localStorage.getItem('role') as Role

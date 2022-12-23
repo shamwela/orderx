@@ -1,21 +1,24 @@
 import type { Request, Response, NextFunction } from 'express'
-import jwtLibrary from 'jsonwebtoken'
+import { verify } from 'jsonwebtoken'
 
 export function rejectUnauthenticatedRequests(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
-  const jwt = request.cookies?.jwt
-  console.log(jwt)
-
+  const jwt = request.headers?.jwt
+  const message = 'Please log in first.'
+  if (typeof jwt !== 'string') {
+    console.error('Invalid JWT.')
+    return response.status(401).json({ message })
+  }
   const jwtSecret = process.env.JWT_SECRET as string
   try {
-    jwtLibrary.verify(jwt, jwtSecret)
+    verify(jwt, jwtSecret)
   } catch (error) {
     // Invalid JWT token
     console.error(error)
-    return response.status(401).json({ message: 'Please log in first.' })
+    return response.status(401).json({ message })
   }
   next()
 }

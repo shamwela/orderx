@@ -14,9 +14,16 @@ export function useMyFetch<T>(
       >
     | undefined
 ) {
+  const jwt = localStorage.getItem('jwt') as string
+  const headers = {
+    jwt,
+    ...options?.headers,
+  }
+
   return useFetch<T>(request, {
     baseURL: serverUrl,
-    credentials: 'include',
+    headers,
+    server: false,
     ...options,
   })
 }

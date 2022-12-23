@@ -2,9 +2,11 @@
 import type { CartItem } from '~~/types/CartItem'
 import type { Product } from '~~/types/Product'
 
-const { error, data: products } = await useMyFetch<Product[]>(
-  '/product/read-all'
-)
+const {
+  error,
+  pending,
+  data: products,
+} = await useMyFetch<Product[]>('/product/read-all')
 if (error.value) {
   handleError(error)
 }
@@ -18,14 +20,14 @@ const total = computed(() =>
     return finalTotal
   }, 0)
 )
-const pending = ref(false)
+const ordering = ref(false)
 
 function addToCart(newCartItem: CartItem) {
   cart.value.push(newCartItem)
 }
 
 async function order(event: Event) {
-  pending.value = true
+  ordering.value = true
   const orderType = getValueFromEvent(event, 'orderType')
   const tableNumber = Number(getValueFromEvent(event, 'tableNumber'))
   const { error } = await useMyFetch('/order/create', {
@@ -36,7 +38,7 @@ async function order(event: Event) {
       tableNumber,
     },
   })
-  pending.value = false
+  ordering.value = false
   if (error.value) {
     handleError(error)
     return
@@ -47,9 +49,8 @@ async function order(event: Event) {
 </script>
 
 <template>
-  <span v-if="error">
-    Couldn't fetch the product data. Please contact your admin.
-  </span>
+  <span v-if="error">Couldn't fetch the products.</span>
+  <span v-else-if="pending">Fetching the products...</span>
   <div v-else class="flex flex-col gap-y-4">
     <h1>Products</h1>
     <div
@@ -103,8 +104,8 @@ async function order(event: Event) {
         class="w-20"
       />
 
-      <button :disabled="pending" type="submit">
-        <span v-if="pending">Ordering...</span>
+      <button :disabled="ordering" type="submit">
+        <span v-if="ordering">Ordering...</span>
         <span v-else>Order</span>
       </button>
     </form>
