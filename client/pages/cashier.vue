@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { CartItem } from '~~/types/CartItem'
 
+useTitle('Cashier')
 const { error, data: products } = await useProducts()
 if (error.value || !products.value) {
   handleError(error)

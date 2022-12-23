@@ -1,4 +1,5 @@
 <script setup lang="ts">
+useTitle('OrderX')
 const role = useRole()
 
 async function logout() {

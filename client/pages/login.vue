@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Role } from '~~/types/Role'
 
+useTitle('OrderX login')
 const pending = ref(false)
 
 async function login(event: Event) {

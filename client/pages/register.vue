@@ -1,4 +1,5 @@
 <script setup lang="ts">
+useTitle('OrderX register')
 const pending = ref(false)
 
 async function registerAccount(event: Event) {

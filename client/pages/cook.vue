@@ -1,4 +1,5 @@
 <script setup lang="ts">
+useTitle('Cook')
 const { error, data: orders } = await useMyFetch<any>('/order/read-all')
 if (error.value) {
   handleError(error)
