@@ -1,19 +1,15 @@
 import { JwtUserPayload } from './../types/JwtUserPayload'
-import type { Request, Response, NextFunction } from 'express'
-import jwtLibrary from 'jsonwebtoken'
+import type { Handler } from 'express'
+import { verify } from 'jsonwebtoken'
 import { rejectUnauthenticatedRequests } from './rejectUnauthenticatedRequests'
 
-export function adminOnly(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export const adminOnly: Handler = (request, response, next) => {
   rejectUnauthenticatedRequests(request, response, next)
   const jwt = request.cookies?.jwt
   const jwtSecret = process.env.JWT_SECRET as string
   let jwtUserPayload: JwtUserPayload
   try {
-    jwtUserPayload = jwtLibrary.verify(jwt, jwtSecret) as JwtUserPayload
+    jwtUserPayload = verify(jwt, jwtSecret) as JwtUserPayload
   } catch (error) {
     // Invalid JWT token
     console.error(error)

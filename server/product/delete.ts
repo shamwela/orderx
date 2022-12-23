@@ -1,7 +1,7 @@
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 
-export async function deleteProduct(request: Request, response: Response) {
+export const deleteProduct: Handler = async (request, response) => {
   type RequestBody = {
     id: string
   }

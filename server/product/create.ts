@@ -1,8 +1,8 @@
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import { getJwtUserPayload } from '../utilities/getJwtUserPayload'
 
-export async function createProduct(request: Request, response: Response) {
+export const createProduct: Handler = async (request, response) => {
   type ProductInput = {
     name: string
     price: number

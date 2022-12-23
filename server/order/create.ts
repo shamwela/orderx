@@ -1,9 +1,9 @@
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import { getJwtUserPayload } from '../utilities/getJwtUserPayload'
 import type { OrderType } from '@prisma/client'
 
-export async function createOrder(request: Request, response: Response) {
+export const createOrder: Handler = async (request, response) => {
   const { id, role } = getJwtUserPayload(request)
   if (role !== 'cashier') {
     return response

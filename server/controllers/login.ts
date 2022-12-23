@@ -1,10 +1,10 @@
 import { JwtUserPayload } from './../types/JwtUserPayload'
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import bcrypt from 'bcrypt'
 import { generateJwt } from '../utilities/generateJwt'
 
-export async function login(request: Request, response: Response) {
+export const login: Handler = async (request, response) => {
   type LoginInput = {
     email: string
     password: string

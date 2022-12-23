@@ -1,10 +1,10 @@
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import bcrypt from 'bcrypt'
 import { JwtUserPayload } from '../types/JwtUserPayload'
 import { generateJwt } from '../utilities/generateJwt'
 
-export async function register(request: Request, response: Response) {
+export const register: Handler = async (request, response) => {
   type RegisterInput = {
     restaurantName: string
     email: string

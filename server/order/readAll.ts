@@ -1,7 +1,7 @@
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 
-export async function readAllOrders(request: Request, response: Response) {
+export const readAllOrders: Handler = async (request, response) => {
   try {
     const orders = await prisma.order.findMany({
       where: { pending: true },

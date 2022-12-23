@@ -1,7 +1,7 @@
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 
-export async function updateProduct(request: Request, response: Response) {
+export const updateProduct: Handler = async (request, response) => {
   type Body = {
     id: string
     name: string

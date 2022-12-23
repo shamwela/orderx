@@ -2,11 +2,9 @@
 import type { CartItem } from '~~/types/CartItem'
 import type { Product } from '~~/types/Product'
 
-const {
-  error,
-  pending,
-  data: products,
-} = await useMyFetch<Product[]>('/product/read-all')
+const { error, data: products } = await useMyFetch<Product[]>(
+  '/product/read-all'
+)
 if (error.value) {
   handleError(error)
 }
@@ -50,7 +48,6 @@ async function order(event: Event) {
 
 <template>
   <span v-if="error">Couldn't fetch the products.</span>
-  <span v-else-if="pending">Fetching the products...</span>
   <div v-else class="flex flex-col gap-y-4">
     <h1>Products</h1>
     <div

@@ -1,11 +1,11 @@
-import type { Request, Response, NextFunction } from 'express'
+import type { Handler } from 'express'
 import { verify } from 'jsonwebtoken'
 
-export function rejectUnauthenticatedRequests(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export const rejectUnauthenticatedRequests: Handler = (
+  request,
+  response,
+  next
+) => {
   const jwt = request.headers?.jwt
   const message = 'Please log in first.'
   if (typeof jwt !== 'string') {

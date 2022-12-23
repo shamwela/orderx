@@ -1,8 +1,8 @@
-import type { Request, Response } from 'express'
+import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 import type { Product } from '@prisma/client'
 
-export async function readProduct(request: Request, response: Response) {
+export const readProduct: Handler = async (request, response) => {
   type Query = {
     id: string
   }
