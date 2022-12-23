@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import type { CartItem } from '~~/types/CartItem'
-import type { Product } from '~~/types/Product'
 
-const { error, data: products } = await useMyFetch<Product[]>(
-  '/product/read-all'
-)
-if (error.value) {
+const { error, data: products } = await useProducts()
+if (error.value || !products.value) {
   handleError(error)
 }
+const matchedProducts = ref(products.value)
 
-const cart = ref<CartItem[]>([])
+const cart = useState<CartItem[]>('cart', () => [])
 const total = computed(() =>
   cart.value.reduce((previousTotal, item) => {
     const { price, quantity } = item
@@ -20,7 +18,24 @@ const total = computed(() =>
 )
 const ordering = ref(false)
 
+function search(event: Event) {
+  const query = getValueFromEvent(event, 'query')
+  if (!products.value) {
+    return
+  }
+  matchedProducts.value = products.value.filter(({ name }) =>
+    name.toLowerCase().includes(query.toLowerCase())
+  )
+  if (matchedProducts.value.length === 0) {
+    matchedProducts.value = products.value
+    alert(`Couldn't find product with the name "${query}".`)
+  }
+}
+
 function addToCart(newCartItem: CartItem) {
+  // Reset the state
+  matchedProducts.value = products.value
+
   cart.value.push(newCartItem)
 }
 
@@ -41,6 +56,7 @@ async function order(event: Event) {
     handleError(error)
     return
   }
+
   cart.value = []
   alert('Order successful.')
 }
@@ -50,8 +66,19 @@ async function order(event: Event) {
   <span v-if="error">Couldn't fetch the products.</span>
   <div v-else class="flex flex-col gap-y-4">
     <h1>Products</h1>
+    <form @submit.prevent="search" class="flex gap-x-4 items-center">
+      <label for="query">Search</label>
+      <input
+        name="query"
+        id="query"
+        type="search"
+        autocomplete="off"
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
     <div
-      v-for="{ id, name, price } in products"
+      v-for="{ id, name, price } in matchedProducts"
       class="flex gap-x-4 items-center"
     >
       <Product
@@ -61,8 +88,6 @@ async function order(event: Event) {
         :addToCart="addToCart"
       />
     </div>
-
-    <hr />
 
     <h1>Cart</h1>
     <div v-for="{ name, quantity } in cart">
