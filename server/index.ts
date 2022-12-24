@@ -33,9 +33,9 @@ app.use(xssClean())
 app.use(helmet())
 
 app.post('/register', register)
+app.post('/login', login)
 
 app.use(rejectUnauthenticatedRequests)
-app.post('/login', login)
 app.get('/logout', logout)
 app.use('/product', productRouter)
 app.use('/order', orderRouter)
