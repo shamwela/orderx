@@ -1,3 +1,4 @@
+import { userRouter } from './user/router'
 import { orderRouter } from './order/router'
 import { productRouter } from './product/router'
 import express from 'express'
@@ -9,6 +10,7 @@ import helmet from 'helmet'
 import { register } from './controllers/register'
 import { login } from './controllers/login'
 import { logout } from './controllers/logout'
+import { rejectUnauthenticatedRequests } from './middlewares/rejectUnauthenticatedRequests'
 
 const app = express()
 app.use(express.json())
@@ -31,12 +33,15 @@ app.use(xssClean())
 app.use(helmet())
 
 app.post('/register', register)
+
+app.use(rejectUnauthenticatedRequests)
 app.post('/login', login)
 app.get('/logout', logout)
 app.use('/product', productRouter)
 app.use('/order', orderRouter)
+app.use('/user', userRouter)
 
-app.use((request, response) =>
+app.get('*', (request, response) =>
   response.status(404).json({ message: 'This route does not exist.' })
 )
 

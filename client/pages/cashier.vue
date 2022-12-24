@@ -2,7 +2,7 @@
 import type { CartItem } from '~~/types/CartItem'
 
 useTitle('Cashier')
-const { error, data: products } = await useProducts()
+const { error, pending, data: products } = await useProducts()
 if (error.value || !products.value) {
   handleError(error)
 }
@@ -65,6 +65,7 @@ async function order(event: Event) {
 
 <template>
   <span v-if="error">Couldn't fetch the products.</span>
+  <span v-else-if="pending">Fetching the products...</span>
   <div v-else class="flex flex-col gap-y-4">
     <h1>Products</h1>
     <form @submit.prevent="search" class="flex gap-x-4 items-center">
