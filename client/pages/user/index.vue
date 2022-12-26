@@ -21,7 +21,7 @@ async function deleteUser(id: string) {
 
 <template>
   <span v-if="error">Couldn't fetch the users' data.</span>
-  <div v-else>
+  <div v-else class='flex flex-col gap-y-[inherit]'>
     <h1>Users</h1>
 
     <NuxtLink to="/user/create" class="button">Create a new user</NuxtLink>
@@ -30,7 +30,7 @@ async function deleteUser(id: string) {
       <span>{{ name }}</span>
       <span>{{ email }}</span>
       <NuxtLink :to="'/user/update/' + id">Edit</NuxtLink>
-      <button @click="deleteUser(id)">Delete</button>
+      <button @click="deleteUser(id)" class="danger">Delete</button>
     </div>
   </div>
 </template>

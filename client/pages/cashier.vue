@@ -65,18 +65,19 @@ async function order(event: Event) {
 
 <template>
   <span v-if="error">Couldn't fetch the products.</span>
-  <span v-else-if="pending">Fetching the products...</span>
-  <div v-else class="flex flex-col gap-y-4">
+  <span v-else-if="pending">Fetching products.</span>
+  <div v-else class="flex flex-col gap-y-[inherit]">
     <h1>Products</h1>
     <form @submit.prevent="search" class="flex gap-x-4 items-center">
-      <label for="query">Search</label>
       <input
         name="query"
-        id="query"
         type="search"
+        placeholder="Search by name"
+        aria-label="Search by name"
         autocomplete="off"
         required
       />
+
       <button type="submit">Search</button>
     </form>
     <div

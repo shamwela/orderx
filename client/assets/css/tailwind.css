@@ -32,12 +32,16 @@
   button[type='submit'],
   .button,
   input {
-    @apply rounded-lg;
+    @apply rounded-lg px-3 py-1;
   }
 
   button,
   button[type='submit'],
   .button {
-    @apply bg-blue-500 px-3 py-1 text-black hover:no-underline hover:bg-blue-400 disabled:cursor-not-allowed max-w-fit;
+    @apply bg-blue-500 text-black hover:no-underline hover:bg-blue-400 disabled:cursor-not-allowed max-w-fit;
+  }
+
+  .danger {
+    @apply bg-red-500 hover:bg-red-400;
   }
 }

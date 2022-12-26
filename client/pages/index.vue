@@ -1,21 +1,23 @@
 <script setup lang="ts">
 useTitle('OrderX')
-const role = useRole()
+const jwt = localStorage.getItem('jwt')
 
-async function logout() {
-  await useMyFetch('/logout')
-  // Since the "role" is stored as a cookie, should reload
+function logout() {
+  localStorage.removeItem('jwt')
+  localStorage.removeItem('role')
   window.location.reload()
 }
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-4">
-    <h1>OrderX</h1>
-    <button v-if="role" @click="logout">Logout</button>
-    <div v-else class="flex flex-col gap-y-[inherit]">
-      <NuxtLink to="/login">Login</NuxtLink>
-      <NuxtLink to="/register">Register</NuxtLink>
+  <main class="flex justify-center">
+    <div class="flex flex-col gap-y-4 items-center">
+      <h1>OrderX</h1>
+      <button v-if="jwt" @click="logout" class="danger">Logout</button>
+      <div v-else class="flex flex-col gap-y-[inherit] items-center">
+        <NuxtLink to="/login" class="button">Login</NuxtLink>
+        <NuxtLink to="/register" class="button">Register</NuxtLink>
+      </div>
     </div>
-  </div>
+  </main>
 </template>

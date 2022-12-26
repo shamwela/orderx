@@ -19,7 +19,7 @@ async function deleteProduct(id: string) {
 
 <template>
   <span v-if="error">Couldn't fetch the products.</span>
-  <div v-else>
+  <div v-else class="flex flex-col gap-y-[inherit]">
     <h1>Products</h1>
 
     <NuxtLink to="/product/create" class="button">
@@ -32,8 +32,8 @@ async function deleteProduct(id: string) {
     >
       <span>{{ name }}</span>
       <span>${{ price }}</span>
-      <NuxtLink :to="'/product/update/' + id">Edit</NuxtLink>
-      <button @click="deleteProduct(id)">Delete</button>
+      <NuxtLink :to="'/product/update/' + id" class="button">Edit</NuxtLink>
+      <button @click="deleteProduct(id)" class="danger">Delete</button>
     </div>
   </div>
 </template>

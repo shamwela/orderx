@@ -42,5 +42,4 @@ async function login(event: Event) {
       <span v-else>Login</span>
     </button>
   </form>
-  <NuxtLink to="register">Register</NuxtLink>
 </template>

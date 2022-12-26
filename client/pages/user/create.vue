@@ -21,7 +21,7 @@ async function createUser(event: Event) {
 <template>
   <h1>Create a new user</h1>
 
-  <form @submit.prevent="createUser">
+  <form @submit.prevent="createUser" class='flex flex-col gap-y-[inherit]'>
     <label for="name">Name</label>
     <input id="name" name="name" type="text" maxlength="50" required />
 

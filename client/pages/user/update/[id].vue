@@ -40,10 +40,10 @@ async function updateUser(event: Event) {
 
 <template>
   <span v-if="error || !user">Couldn't fetch the user data.</span>
-  <div v-else>
+  <div v-else class='flex flex-col gap-y-[inherit]'>
     <h1>Edit user data</h1>
 
-    <form @submit.prevent="updateUser">
+    <form @submit.prevent="updateUser" class='flex flex-col gap-y-[inherit]'>
       <label for="name">Name</label>
       <input
         :value="user.name"

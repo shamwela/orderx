@@ -29,10 +29,10 @@ async function registerAccount(event: Event) {
 
 <template>
   <h1>OrderX Register</h1>
-  <form @submit.prevent="registerAccount">
+  <form @submit.prevent="registerAccount" class="flex flex-col gap-y-4">
     <label for="restaurantName">Restaurant name</label>
     <input
-      name="Restaurant name"
+      name="restaurantName"
       id="restaurantName"
       type="text"
       maxlength="20"
@@ -40,11 +40,9 @@ async function registerAccount(event: Event) {
     />
     <EmailInputGroup />
     <PasswordInputGroup />
-
     <button type="submit">
       <span v-if="pending">Registering...</span>
       <span v-else>Register</span>
     </button>
   </form>
-  <NuxtLink to="login">Login</NuxtLink>
 </template>

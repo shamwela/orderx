@@ -38,10 +38,10 @@ async function updateProduct(event: Event) {
 
 <template>
   <span v-if="error || !product">Couldn't fetch the product data.</span>
-  <div v-else>
+  <div v-else class="flex flex-col gap-y-[inherit]">
     <h1>Edit product</h1>
 
-    <form @submit.prevent="updateProduct">
+    <form @submit.prevent="updateProduct" class='flex flex-col gap-y-[inherit]'>
       <label for="name">Name</label>
       <input
         :value="product.name"
