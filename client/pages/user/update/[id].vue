@@ -3,7 +3,7 @@ import { User } from '~~/types/User'
 
 const route = useRoute()
 const { id } = route.params
-const { error, data: user } = await useMyFetch<User>('/user/read', {
+const { error, data: user } = await useMyFetch<User>('/user', {
   params: { id },
 })
 
@@ -18,7 +18,7 @@ async function updateUser(event: Event) {
   const name = getValueFromEvent(event, 'name')
   const email = getValueFromEvent(event, 'email')
   const role = getValueFromEvent(event, 'role')
-  const { error } = await useMyFetch('/user/update', {
+  const { error } = await useMyFetch('/user', {
     method: 'put',
     body: {
       id,

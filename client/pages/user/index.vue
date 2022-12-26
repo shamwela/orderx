@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { User } from '~~/types/User'
 
-const { error, data: users } = await useMyFetch<User[]>('/user/read-all')
+const { error, data: users } = await useMyFetch<User[]>('/user')
 if (error.value) {
   handleError(error)
 }
 
 async function deleteUser(id: string) {
-  const { error } = await useMyFetch('/user/delete', {
+  const { error } = await useMyFetch('/user', {
     method: 'delete',
     body: { id },
   })

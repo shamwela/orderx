@@ -6,7 +6,7 @@ async function createUser(event: Event) {
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
   const role = getValueFromEvent(event, 'role') as Role
-  const { error } = await useMyFetch('/user/create', {
+  const { error } = await useMyFetch('/user', {
     method: 'post',
     body: { name, email, password, role },
   })
