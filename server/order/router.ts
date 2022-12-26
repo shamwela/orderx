@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { createOrder } from './create'
-import { readAllOrders } from './readAll'
+import { readOrders } from './read'
 
 export const orderRouter = Router()
-orderRouter.post('/create',  createOrder)
-orderRouter.get('/read-all', readAllOrders)
+orderRouter.post('/', createOrder)
+orderRouter.get('/', readOrders)

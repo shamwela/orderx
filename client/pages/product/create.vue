@@ -5,7 +5,7 @@ async function createProduct(event: Event) {
   pending.value = true
   const name = getValueFromEvent(event, 'name')
   const price = getValueFromEvent(event, 'price')
-  const { error } = await useMyFetch('/product/create', {
+  const { error } = await useMyFetch('/product', {
     method: 'post',
     body: { name, price },
   })

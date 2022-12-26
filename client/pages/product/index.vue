@@ -5,7 +5,7 @@ if (error.value) {
 }
 
 async function deleteProduct(id: string) {
-  const { error } = await useMyFetch('/product/delete', {
+  const { error } = await useMyFetch('/product', {
     method: 'delete',
     body: { id },
   })
@@ -13,8 +13,7 @@ async function deleteProduct(id: string) {
     handleError(error)
     return
   }
-  await refreshNuxtData()
-  alert('Delete successful.')
+  location.reload()
 }
 </script>
 

@@ -27,6 +27,12 @@ export const readUser: Handler = async (request, response) => {
   }
 
   const { restaurantId } = getJwtUserPayload(request)
-  const users = await prisma.user.findMany({ where: { restaurantId } })
+  let users: User[] | null
+  try {
+    users = await prisma.user.findMany({ where: { restaurantId } })
+  } catch (error) {
+    console.error(error)
+    return response.status(500).json({ message: 'Database error.' })
+  }
   return response.json(users)
 }

@@ -15,8 +15,7 @@ async function deleteUser(id: string) {
     handleError(error)
     return
   }
-  await refreshNuxtData()
-  alert('Delete successful.')
+  location.reload()
 }
 </script>
 

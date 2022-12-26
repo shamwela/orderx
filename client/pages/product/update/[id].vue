@@ -3,7 +3,7 @@ import { Product } from '~~/types/Product'
 
 const route = useRoute()
 const { id } = route.params
-const { error, data: product } = await useMyFetch<Product>('/product/read', {
+const { error, data: product } = await useMyFetch<Product>('/product', {
   params: { id },
 })
 
@@ -17,7 +17,7 @@ async function updateProduct(event: Event) {
   pending.value = true
   const name = getValueFromEvent(event, 'name')
   const price = Number(getValueFromEvent(event, 'price'))
-  const { error } = await useMyFetch('/product/update', {
+  const { error } = await useMyFetch('/product', {
     method: 'put',
     body: {
       id,

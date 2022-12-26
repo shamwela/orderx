@@ -1,7 +1,7 @@
 import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 
-export const readAllOrders: Handler = async (request, response) => {
+export const readOrders: Handler = async (request, response) => {
   try {
     const orders = await prisma.order.findMany({
       where: { pending: true },
