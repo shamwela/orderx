@@ -6,17 +6,13 @@ export const restaurants: Prisma.RestaurantCreateManyInput[] = [
     id: '1',
     name: 'Mya Sabei',
   },
-  {
-    id: '2',
-    name: 'Yadanar',
-  },
 ]
 
 export let users: Prisma.UserCreateManyInput[] = [
   {
     id: '1',
     name: 'Admin',
-    email: 'myasabei@gmail.com',
+    email: 'myasabei-admin@gmail.com',
     // Will add hashed password below
     password: '',
     role: 'admin',
@@ -25,9 +21,17 @@ export let users: Prisma.UserCreateManyInput[] = [
   {
     id: '2',
     name: 'Aung Aung',
-    email: 'aungaung@gmail.com',
+    email: 'myasabei-cashier@gmail.com',
     password: '',
     role: 'cashier',
+    restaurantId: '1',
+  },
+  {
+    id: '3',
+    name: 'Bo Bo',
+    email: 'myasabei-cook@gmail.com',
+    password: '',
+    role: 'cook',
     restaurantId: '1',
   },
 ]
@@ -37,21 +41,70 @@ bcrypt.hash('password123', saltRounds, function (error, hashedPassword) {
     console.error(error)
     return
   }
-  // For all user, add hashed passwords
-  users.forEach((user) => (user.password = hashedPassword))
+  // For all users, add hashed passwords
+  users.forEach(({ password }) => (password = hashedPassword))
 })
 
 export const products: Prisma.ProductCreateManyInput[] = [
   {
     id: '1',
     name: 'Tea',
-    price: 1,
+    // Prices are in US dollars
+    price: 0.3,
     restaurantId: '1',
   },
   {
     id: '2',
-    name: 'Fried rice',
-    price: 2,
+    name: 'Coffee',
+    price: 0.3,
+    restaurantId: '1',
+  },
+  {
+    id: '3',
+    name: 'Egg Fried Rice',
+    price: 0.7,
+    restaurantId: '1',
+  },
+  {
+    id: '4',
+    name: 'Rice Salad',
+    price: 0.6,
+    restaurantId: '1',
+  },
+  {
+    id: '5',
+    name: 'Noodle Salad',
+    price: 0.7,
+    restaurantId: '1',
+  },
+  {
+    id: '6',
+    name: 'Nangyi Salad',
+    price: 0.7,
+    restaurantId: '1',
+  },
+  {
+    id: '7',
+    name: 'Nanpyar Salad',
+    price: 0.7,
+    restaurantId: '1',
+  },
+  {
+    id: '8',
+    name: 'Shwe Taung Noodle',
+    price: 0.7,
+    restaurantId: '1',
+  },
+  {
+    id: '9',
+    name: 'Shan Noodle',
+    price: 0.8,
+    restaurantId: '1',
+  },
+  {
+    id: '10',
+    name: 'Noodle Soup',
+    price: 0.8,
     restaurantId: '1',
   },
 ]
