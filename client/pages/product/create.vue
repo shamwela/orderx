@@ -14,6 +14,7 @@ async function createProduct(event: Event) {
     handleError(error)
     return
   }
+  await navigateTo('/product')
   alert('Product created.')
 }
 </script>
@@ -21,7 +22,7 @@ async function createProduct(event: Event) {
 <template>
   <h1>Create a new product</h1>
 
-  <form @submit.prevent="createProduct" class='flex flex-col gap-y-[inherit]'>
+  <form @submit.prevent="createProduct" class="flex flex-col gap-y-[inherit]">
     <label for="name">Name</label>
     <input id="name" name="name" type="text" maxlength="50" required />
 

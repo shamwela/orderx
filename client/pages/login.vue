@@ -33,7 +33,7 @@ async function login(event: Event) {
 </script>
 
 <template>
-  <h1>OrderX Login</h1>
+  <h1>OrderX login</h1>
   <form @submit.prevent="login" class="flex flex-col gap-y-4">
     <EmailInputGroup />
     <PasswordInputGroup />

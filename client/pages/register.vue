@@ -9,6 +9,7 @@ async function registerAccount(event: Event) {
   const email = getValueFromEvent(event, 'email')
   const password = getValueFromEvent(event, 'password')
   const { error, data: jwt } = await useMyFetch<string>('/register', {
+    method: 'post',
     body: {
       restaurantName,
       email,
@@ -28,7 +29,7 @@ async function registerAccount(event: Event) {
 </script>
 
 <template>
-  <h1>OrderX Register</h1>
+  <h1>OrderX register</h1>
   <form @submit.prevent="registerAccount" class="flex flex-col gap-y-4">
     <label for="restaurantName">Restaurant name</label>
     <input
