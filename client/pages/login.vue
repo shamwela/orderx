@@ -29,6 +29,7 @@ async function login(event: Event) {
   localStorage.setItem('jwt', jwt)
   localStorage.setItem('role', role)
   await navigateAccordingToRole()
+  window.location.reload()
 }
 </script>
 
