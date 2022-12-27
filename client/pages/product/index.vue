@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useTitle('OrderX products')
+useTitle('Products')
 const { error, data: products } = await useProducts()
 if (error.value) {
   handleError(error)

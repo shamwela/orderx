@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { User } from '~~/types/User'
+useTitle('Users')
 
 const { error, data: users } = await useMyFetch<User[]>('/user')
 if (error.value) {
