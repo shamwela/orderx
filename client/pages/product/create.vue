@@ -15,7 +15,6 @@ async function createProduct(event: Event) {
     return
   }
   await navigateTo('/product')
-  alert('Product created.')
 }
 </script>
 

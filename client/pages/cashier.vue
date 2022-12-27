@@ -97,8 +97,6 @@ async function order(event: Event) {
       <span>{{ name }}</span> x <span>{{ quantity }}</span>
     </div>
 
-    <h2>Total = ${{ total }}</h2>
-
     <form @submit.prevent="order" class="flex flex-col gap-y-[inherit]">
       <div class="flex flex-col gap-y-2">
         <strong>Order type</strong>
@@ -125,9 +123,12 @@ async function order(event: Event) {
         type="number"
         min="1"
         step="1"
+        class="w-40"
+        placeholder="Table number"
         required
-        class="w-20"
       />
+
+      <h2>Total = ${{ total }}</h2>
 
       <button :disabled="ordering" type="submit">
         <span v-if="ordering">Ordering...</span>

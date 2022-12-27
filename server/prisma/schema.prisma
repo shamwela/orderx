@@ -13,6 +13,7 @@ model Restaurant {
   name     String    @db.VarChar(20)
   users    User[]
   products Product[]
+  Order    Order[]
 
   @@index([name])
 }
@@ -55,14 +56,18 @@ enum OrderType {
 }
 
 model Order {
-  id          String             @id @default(uuid())
-  cashierId   String
-  tableNumber Int                @db.SmallInt
-  type        OrderType
-  pending     Boolean            @default(true)
-  User        User               @relation(fields: [cashierId], references: [id])
-  products    OrdersOnProducts[]
+  id           String     @id @default(uuid())
+  tableNumber  Int        @db.SmallInt
+  type         OrderType
+  pending      Boolean    @default(true)
+  restaurantId String
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
 
+  cashierId String
+  User      User               @relation(fields: [cashierId], references: [id])
+  products  OrdersOnProducts[]
+
+  @@index([restaurantId])
   @@index([cashierId])
 }
 

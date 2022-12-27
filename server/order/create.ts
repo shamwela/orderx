@@ -4,7 +4,7 @@ import { getJwtUserPayload } from '../utilities/getJwtUserPayload'
 import type { OrderType } from '@prisma/client'
 
 export const createOrder: Handler = async (request, response) => {
-  const { id, role } = getJwtUserPayload(request)
+  const { id, role, restaurantId } = getJwtUserPayload(request)
   if (role === 'cook') {
     return response
       .status(403)
@@ -29,6 +29,7 @@ export const createOrder: Handler = async (request, response) => {
       cashierId,
       type: orderType,
       tableNumber,
+      restaurantId,
     },
   })
   const orderId = order.id

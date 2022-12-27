@@ -5,6 +5,9 @@ if (error.value) {
 }
 
 async function deleteProduct(id: string) {
+  if (!confirm('Are you sure you want to delete?')) {
+    return
+  }
   const { error } = await useMyFetch('/product', {
     method: 'delete',
     body: { id },
@@ -28,7 +31,7 @@ async function deleteProduct(id: string) {
 
     <div
       v-for="{ id, name, price } in products"
-      class="flex gap-x-4 items-center"
+      class="flex gap-x-8 items-center"
     >
       <span>{{ name }}</span>
       <span>${{ price }}</span>

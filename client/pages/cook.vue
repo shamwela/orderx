@@ -10,9 +10,15 @@ if (error.value) {
   <span v-if="error">
     Couldn't fetch the orders. Please contact your admin.
   </span>
+  <span v-else-if="orders.length === 0" class="text-center">
+    No orders for now.
+  </span>
   <div v-else class="flex flex-col gap-y-[inherit]">
-    <h1>Cook</h1>
-    <div v-for="{ tableNumber, type, products } in orders" class='flex flex-col gap-y-[inherit]'>
+    <h1>Orders</h1>
+    <div
+      v-for="{ tableNumber, type, products } in orders"
+      class="flex flex-col gap-y-[inherit]"
+    >
       <h2>Table number {{ tableNumber }}</h2>
       <span>Order type = {{ type }}</span>
       <div v-for="{ product, quantity } in products">

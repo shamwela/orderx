@@ -14,14 +14,14 @@ async function createUser(event: Event) {
     handleError(error)
     return
   }
-  alert('User created.')
+  await navigateTo('/user')
 }
 </script>
 
 <template>
   <h1>Create a new user</h1>
 
-  <form @submit.prevent="createUser" class='flex flex-col gap-y-[inherit]'>
+  <form @submit.prevent="createUser" class="flex flex-col gap-y-[inherit]">
     <label for="name">Name</label>
     <input id="name" name="name" type="text" maxlength="50" required />
 

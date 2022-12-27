@@ -1,10 +1,15 @@
+import { getJwtUserPayload } from './../utilities/getJwtUserPayload'
 import type { Handler } from 'express'
 import { prisma } from '../prisma/prismaClient'
 
 export const readOrders: Handler = async (request, response) => {
+  const { restaurantId } = getJwtUserPayload(request)
   try {
     const orders = await prisma.order.findMany({
-      where: { pending: true },
+      where: {
+        restaurantId,
+        pending: true,
+      },
       include: {
         products: {
           include: {
