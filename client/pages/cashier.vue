@@ -75,6 +75,7 @@ async function order(event: Event) {
         placeholder="Search by name"
         aria-label="Search by name"
         autocomplete="off"
+        class="mr-auto w-full"
         required
       />
 
@@ -123,7 +124,7 @@ async function order(event: Event) {
         type="number"
         min="1"
         step="1"
-        class="w-40"
+        class="w-36"
         placeholder="Table number"
         required
       />

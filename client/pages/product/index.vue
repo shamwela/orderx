@@ -33,7 +33,7 @@ async function deleteProduct(id: string) {
       v-for="{ id, name, price } in products"
       class="flex gap-x-8 items-center"
     >
-      <span>{{ name }}</span>
+      <span class="mr-auto">{{ name }}</span>
       <span>${{ price }}</span>
       <NuxtLink :to="'/product/update/' + id" class="button">Edit</NuxtLink>
       <button @click="deleteProduct(id)" class="danger">Delete</button>
