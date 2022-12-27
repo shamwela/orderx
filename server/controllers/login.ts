@@ -28,5 +28,6 @@ export const login: Handler = async (request, response) => {
   const { id, role, restaurantId } = user
   const jwtUserPayload: JwtUserPayload = { id, role, restaurantId }
   const jwt = generateJwt(jwtUserPayload)
+
   return response.json({ jwt, role })
 }

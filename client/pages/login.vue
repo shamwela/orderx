@@ -18,13 +18,13 @@ async function login(event: Event) {
     },
   })
   pending.value = false
-  const { jwt, role } = data.value as {
-    jwt: string
-    role: Role
-  }
   if (error.value) {
     handleError(error)
     return
+  }
+  const { jwt, role } = data.value as {
+    jwt: string
+    role: Role
   }
   localStorage.setItem('jwt', jwt)
   localStorage.setItem('role', role)

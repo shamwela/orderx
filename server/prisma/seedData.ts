@@ -42,7 +42,7 @@ bcrypt.hash('password123', saltRounds, function (error, hashedPassword) {
     return
   }
   // For all users, add hashed passwords
-  users.forEach(({ password }) => (password = hashedPassword))
+  users.forEach((user) => (user.password = hashedPassword))
 })
 
 export const products: Prisma.ProductCreateManyInput[] = [
