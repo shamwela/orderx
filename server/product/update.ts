@@ -5,7 +5,7 @@ export const updateProduct: Handler = async (request, response) => {
   type Body = {
     id: string
     name: string
-    price: number
+    price: string
   }
   const { id, name, price }: Body = request.body
   try {

@@ -30,8 +30,6 @@ async function updateProduct(event: Event) {
     handleError(error)
     return
   }
-  await refreshNuxtData()
-  alert('Updated.')
   await navigateTo('/product')
 }
 </script>
@@ -41,7 +39,7 @@ async function updateProduct(event: Event) {
   <div v-else class="flex flex-col gap-y-[inherit]">
     <h1>Edit product</h1>
 
-    <form @submit.prevent="updateProduct" class='flex flex-col gap-y-[inherit]'>
+    <form @submit.prevent="updateProduct" class="flex flex-col gap-y-[inherit]">
       <label for="name">Name</label>
       <input
         :value="product.name"

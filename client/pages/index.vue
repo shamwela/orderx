@@ -1,5 +1,6 @@
 <script setup lang="ts">
 useTitle('OrderX')
+navigateAccordingToRole()
 </script>
 
 <template>

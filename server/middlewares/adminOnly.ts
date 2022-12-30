@@ -5,7 +5,6 @@ import { verify } from 'jsonwebtoken'
 export const adminOnly: Handler = (request, response, next) => {
   const jwt = request.headers?.jwt as string
   const jwtSecret = process.env.JWT_SECRET as string
-  console.log(jwtSecret)
   let jwtUserPayload: JwtUserPayload
   try {
     jwtUserPayload = verify(jwt, jwtSecret) as JwtUserPayload
