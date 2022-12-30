@@ -36,8 +36,8 @@ async function login(event: Event) {
 <template>
   <h1>OrderX login</h1>
   <form @submit.prevent="login" class="flex flex-col gap-y-4">
-    <EmailInputGroup />
-    <PasswordInputGroup />
+    <EmailInput />
+    <PasswordInput />
     <button type="submit">
       <span v-if="pending">Logging in...</span>
       <span v-else>Login</span>

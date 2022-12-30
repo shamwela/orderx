@@ -58,8 +58,7 @@ async function order(event: Event) {
     return
   }
 
-  cart.value = []
-  alert('Order successful.')
+  window.location.reload()
 }
 </script>
 

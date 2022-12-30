@@ -31,16 +31,16 @@ async function registerAccount(event: Event) {
 <template>
   <h1>OrderX register</h1>
   <form @submit.prevent="registerAccount" class="flex flex-col gap-y-4">
-    <label for="restaurantName">Restaurant name</label>
     <input
       name="restaurantName"
-      id="restaurantName"
+      placeholder="Restaurant name"
+      aria-label="Restaurant name"
       type="text"
       maxlength="20"
       required
     />
-    <EmailInputGroup />
-    <PasswordInputGroup />
+    <EmailInput />
+    <PasswordInput />
     <button type="submit">
       <span v-if="pending">Registering...</span>
       <span v-else>Register</span>

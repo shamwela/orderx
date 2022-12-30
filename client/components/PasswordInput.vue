@@ -1,8 +1,8 @@
 <template>
-  <label for="password">Password</label>
   <input
     name="password"
-    id="password"
+    placeholder="Password"
+    aria-label="Password"
     type="password"
     minlength="8"
     maxlength="100"

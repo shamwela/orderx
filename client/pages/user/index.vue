@@ -31,7 +31,7 @@ async function deleteUser(id: string) {
     <NuxtLink to="/user/create" class="button">Create a new user</NuxtLink>
 
     <div v-for="{ id, name, email } in users" class="flex gap-x-8 items-center">
-      <span>{{ name }}</span>
+      <span class="mr-auto">{{ name }}</span>
       <span>{{ email }}</span>
       <NuxtLink :to="'/user/update/' + id">Edit</NuxtLink>
       <button @click="deleteUser(id)" class="danger">Delete</button>
