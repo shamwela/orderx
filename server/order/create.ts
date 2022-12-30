@@ -11,7 +11,6 @@ export const createOrder: Handler = async (request, response) => {
       .json({ message: 'Cooks are not allowed to order.' })
   }
   const cashierId = id
-
   type CartItem = {
     id: string
     name: string
