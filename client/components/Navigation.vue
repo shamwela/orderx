@@ -12,7 +12,7 @@ async function logout() {
 <template>
   <nav
     v-if="jwt"
-    class="flex gap-x-8 justify-center items-center px-4 py-3 bg-gray-200"
+    class="flex gap-x-8 justify-center items-center px-4 py-3"
   >
     <NuxtLink v-if="role === 'admin'" to="/product">Products</NuxtLink>
     <NuxtLink v-if="role === 'admin'" to="/user">User</NuxtLink>
