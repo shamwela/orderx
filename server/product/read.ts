@@ -20,7 +20,7 @@ export const readProduct: Handler = async (request, response) => {
     }
     if (!product) {
       return response
-        .json(400)
+        .json(404)
         .json({ message: `Product with the ID ${id} was not found.` })
     }
     return response.json(product)
